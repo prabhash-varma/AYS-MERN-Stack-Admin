@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Builder from './builder.png'
 import Aysimg from './ays.jpg'
 import {useNavigate} from 'react-router-dom'
-
+import Axios from 'axios'
 
 function Login() {
 
@@ -11,23 +11,27 @@ function Login() {
   const [adminemail, setAdminEmail] = useState('')
   const [adminpassword, setAdminPassword] = useState('')
 
-  const submitDetails = () => {
-
+  const submitDetails = (e) => {
+    e.preventDefault()
 
     if(adminemail === "" || adminemail === null || adminemail === undefined){
       alert('Please enter email')
     }else if(adminpassword === "" || adminpassword === null || adminpassword === undefined){
       alert('Please enter password')
     }else{
-     
-        if(adminemail==="varma@gmail.com" && adminpassword==="1234")
-        {
-          alert('Login success')
-          navigate('/dashboard')
-        }
-        else{
-          alert('login failed')
-        }
+
+        Axios.get(`http://localhost:3001/adminlogin?adminemail=${adminemail}&adminpassword=${adminpassword}`).then((res)=>{
+          if(res.data.auth === true)
+            {
+              alert('Login success')
+              navigate('/dashboard')
+            }
+          else{
+              alert('login failed')
+            }
+        })
+
+        
       
     }
 
@@ -59,7 +63,7 @@ function Login() {
               <div style={{ width: "400px", }}>
 
                 <h2 >Login Here</h2>
-                <form style={{ marginTop: "50px" }}>
+                <form style={{ marginTop: "50px" }} onSubmit={submitDetails}>
                   <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
                     <input onChange={(e)=>{
@@ -74,9 +78,7 @@ function Login() {
                     }} type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
                   </div>
 
-                  <button  className="btn btn-primary" onClick={()=>{
-                    submitDetails();
-                  }}>Submit</button>
+                  <button type="submit"  className="btn btn-primary">Submit</button>
 
 
                 </form>
