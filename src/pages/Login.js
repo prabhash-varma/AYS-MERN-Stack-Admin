@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import Builder from './builder.png'
 import Aysimg from './ays.jpg'
 import {useNavigate} from 'react-router-dom'
 import Axios from 'axios'
+import {store} from '../App.js'
 
 function Login() {
 
@@ -10,6 +11,8 @@ function Login() {
 
   const [adminemail, setAdminEmail] = useState('')
   const [adminpassword, setAdminPassword] = useState('')
+
+  const {admindetails,setAdminDetails} = useContext(store)
 
   const submitDetails = (e) => {
     e.preventDefault()
@@ -24,6 +27,8 @@ function Login() {
           if(res.data.auth === true)
             {
               alert('Login success')
+              localStorage.setItem('token',res.data.token)
+              setAdminDetails({email:adminemail,password:adminpassword})
               navigate('/dashboard')
             }
           else{

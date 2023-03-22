@@ -16,9 +16,12 @@ function OrdersComp(props) {
     })
     setOrdersList([...ordersList])
 
-    Axios.delete(`http://localhost:3001/deleteorder/${id}`).then((res)=>{
+    Axios.delete(`http://localhost:3001/deleteorder/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+        
+    if(res.data.auth){
         console.log(res.data)
         alert('Orders deleted successfully')
+    }
     }
     )
 }

@@ -16,9 +16,12 @@ function EmployeeDashboard() {
 useEffect(()=>{
 
     if(search==""){
-    Axios.get("http://localhost:3001/getemployeesforadmin").then((res)=>{
-        setEmployeesList(res.data)
-        console.log(res.data)
+    Axios.get("http://localhost:3001/getemployeesforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+      
+        if(res.data.auth){
+            setEmployeesList(res.data.employees)
+            console.log(res.data.employees)
+        }
     }).then((res)=>{
         console.log(1)
     })
@@ -29,9 +32,12 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filteremployeesforadmin/?filter=${filter}&search=${search}`).then((response) => {
+    Axios.get(`http://localhost:3001/filteremployeesforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
         console.log("Emp Update list Function",response.data)
-        setEmployeesList(response.data)
+
+        if(response.data.auth){
+        setEmployeesList(response.data.employees)
+        }
 })
 }
 

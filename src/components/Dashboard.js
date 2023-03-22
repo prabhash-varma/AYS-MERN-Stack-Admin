@@ -15,23 +15,41 @@ function Dashboard() {
   const [templist,setTemplist] = useState([]);
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getemployeesforadmin').then((response)=>{
-      setTemplist(response.data)
-      setEmpCount(response.data.length)
+    Axios.get('http://localhost:3001/getemployeesforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+
+    if(response.data.auth){
+      setTemplist(response.data.employees)
+      setEmpCount(response.data.employees.length)
+    }
+    else{
+      navigate('/login')
+    }
     })
   },[])
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getusersforadmin').then((response)=>{
-      setTemplist(response.data)
-      setCustCount(response.data.length)
+    Axios.get('http://localhost:3001/getusersforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+
+    if(response.data.auth){
+      setTemplist(response.data.users)
+      setCustCount(response.data.users.length)
+    }
+    else{
+      navigate('/login')
+    }
     })
   },[])
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getordersforadmin').then((response)=>{
-      setTemplist(response.data)
-      setOrderCount(response.data.length)
+    Axios.get('http://localhost:3001/getordersforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+
+    if(response.data.auth){
+      setTemplist(response.data.orders)
+      setOrderCount(response.data.orders.length)
+    }
+    else{
+      navigate('/login')
+    }
     })
   },[])
 

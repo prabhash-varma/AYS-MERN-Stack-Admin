@@ -17,9 +17,12 @@ function EmployeeComp(props) {
     })
     setEmployeesList([...employeesList  ])
 
-    Axios.delete(`http://localhost:3001/deleteemployee/${id}`).then((res)=>{
+    Axios.delete(`http://localhost:3001/deleteemployee/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+        
+    if(res.data.auth){
         console.log(res.data)
         alert('Employee deleted successfully')
+    }
     }
     )
 }

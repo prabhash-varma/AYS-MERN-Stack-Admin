@@ -15,9 +15,12 @@ function CustomerDashboard() {
 useEffect(()=>{
 
     if(search==""){
-    Axios.get("http://localhost:3001/getusersforadmin").then((res)=>{
-        setCustomersList(res.data)
-        console.log(res.data)
+    Axios.get("http://localhost:3001/getusersforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+        
+        if(res.data.auth){
+        setCustomersList(res.data.users)
+        console.log(res.data.users)
+        }
     }).then((res)=>{
         console.log(1)
     })
@@ -28,9 +31,12 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filtercustomersforadmin/?filter=${filter}&search=${search}`).then((response) => {
+    Axios.get(`http://localhost:3001/filtercustomersforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
         console.log("Update list Function",response.data)
-        setCustomersList(response.data)
+
+        if(response.data.auth){
+            setCustomersList(response.data.users);
+        }
 })
 }
 

@@ -30,9 +30,12 @@ function MsgComp(props) {
         })
         setMsgList([...msgList])
   
-        Axios.delete(`http://localhost:3001/deletemessage/${id}`).then((res)=>{
+        Axios.delete(`http://localhost:3001/deletemessage/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+           
+        if(res.data.auth){
             console.log(res.data)
             alert('Message deleted successfully')
+        }
         }
         )
     }

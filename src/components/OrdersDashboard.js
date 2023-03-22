@@ -15,9 +15,15 @@ function OrdersDashboard() {
 useEffect(()=>{
 
     if(search===""){
-    Axios.get("http://localhost:3001/getordersforadmin").then((res)=>{
-        setOrdersList(res.data)
+    Axios.get("http://localhost:3001/getordersforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+
+    if(res.data.auth){
+        setOrdersList(res.data.orders)
         console.log(res.data)
+    }
+    else{
+        console.log("Error")
+    }
     }).then((res)=>{
         console.log(1)
     })
@@ -30,9 +36,13 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filterordersforadmin/?filter=${filter}&search=${search}`).then((response) => {
+    Axios.get(`http://localhost:3001/filterordersforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
         console.log("Orders Update list Function",response.data)
-        setOrdersList(response.data)
+
+        if(response.data.auth===true){
+         setOrdersList(response.data.orders);
+        console.log("Orders Update list Function",response.data.orders);
+        }
 })
 }
 

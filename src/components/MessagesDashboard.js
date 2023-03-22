@@ -13,9 +13,12 @@ function MessagesDashboard() {
 
 useEffect(()=>{
     if(search===""){
-    Axios.get("http://localhost:3001/getmessagesforadmin").then((res)=>{
-        setMsgList(res.data)
-        console.log(res.data)
+    Axios.get("http://localhost:3001/getmessagesforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+        
+        if(res.data.auth){
+        setMsgList(res.data.messages)
+        console.log(res.data.messages)
+        }
     }).then((res)=>{
         console.log(1)
     })
@@ -28,8 +31,11 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filtermessagesforadmin/?filter=${filter}&search=${search}`).then((response) => {
-        setMsgList(response.data)
+    Axios.get(`http://localhost:3001/filtermessagesforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
+
+    if(response.data.auth){
+        setMsgList(response.data.messages);
+    }
 })
 }
 

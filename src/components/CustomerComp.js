@@ -18,9 +18,12 @@ function CustomerComp(props) {
       })
       setCustomersList([...customersList])
 
-      Axios.delete(`http://localhost:3001/deleteuser/${id}`).then((res)=>{
+      Axios.delete(`http://localhost:3001/deleteuser/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+
+      if(res.data.auth){
           console.log(res.data)
           alert('Customer deleted successfully')
+      }
       }
       )
   }
