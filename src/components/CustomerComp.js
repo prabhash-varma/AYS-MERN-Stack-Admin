@@ -2,9 +2,10 @@ import React from 'react'
 import logo192 from './logo192.png';
 import Axios from 'axios'
 import {store} from '../App'
+import { useNavigate } from 'react-router-dom';
 
 function CustomerComp(props) {
-
+  const navigate = useNavigate();
 
   const {customersList,setCustomersList}=React.useContext(store) 
 
@@ -18,11 +19,14 @@ function CustomerComp(props) {
       })
       setCustomersList([...customersList])
 
-      Axios.delete(`http://localhost:3001/deleteuser/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+      Axios.delete(`http://localhost:3001/deleteuser/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
 
       if(res.data.auth){
           console.log(res.data)
           alert('Customer deleted successfully')
+      }
+      else{
+        navigate('/');
       }
       }
       )
@@ -30,6 +34,7 @@ function CustomerComp(props) {
 
   return (
     <div>
+
       <div style={{border: '1px solid black',height:"300px",width:"500px",marginBottom:"40px",marginLeft:"70px",borderRadius:"15px"}}>
 
       

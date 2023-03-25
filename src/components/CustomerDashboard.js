@@ -2,10 +2,13 @@ import React,{useEffect,useState,useContext} from 'react'
 import CustomerComp from '../components/CustomerComp'
 import Axios from 'axios'
 import {store} from '../App'
+import { useNavigate } from 'react-router-dom';
 
+import '../css/CustomerDashboard.css'
 
 function CustomerDashboard() {
 
+    const navigate = useNavigate();
     const {customersList,setCustomersList}=useContext(store)
 
     const [search,setSearch] = useState("");    
@@ -15,11 +18,14 @@ function CustomerDashboard() {
 useEffect(()=>{
 
     if(search==""){
-    Axios.get("http://localhost:3001/getusersforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+    Axios.get("http://localhost:3001/getusersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
         if(res.data.auth){
         setCustomersList(res.data.users)
         console.log(res.data.users)
+        }
+        else{
+            navigate('/');
         }
     }).then((res)=>{
         console.log(1)
@@ -31,11 +37,14 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filtercustomersforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
+    Axios.get(`http://localhost:3001/filtercustomersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
         console.log("Update list Function",response.data)
 
         if(response.data.auth){
             setCustomersList(response.data.users);
+        }
+        else{
+            navigate('/');
         }
 })
 }
@@ -107,7 +116,59 @@ const updateList = () => {
 
 
 
+
+
         {customersList.length > 0 ? (
+
+            <div>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th> 
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Pincode</th>
+                        <th>Delete</th>
+                    </tr>
+                    {customersList.map((val) => {
+                        return (
+                            <tr>
+                                <td>{val._id.valueOf()}</td>
+                                <td>{val.firstName}</td>
+                                <td>{val.lastName}</td>
+                                <td>{val.email}</td>
+                                <td>{val.phone}</td>
+                                <td>{val.city}</td>
+                                <td>{val.state}</td>
+                                <td>{val.pincode}</td>
+                                <td><button style={{color:'red'}} onClick={()=>{
+                                    Axios.delete(`http://localhost:3001/deleteuser/${val._id.valueOf()}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+                                        console.log(res.data)
+                                        if(res.data.auth){
+                                            updateList();
+                                        }
+                                    })
+                                }
+                                }>Delete</button></td>
+
+                            </tr>
+                        )
+                    }
+                    )}
+                </table>
+            </div>
+
+            ):
+            (
+                <div><div style={{display:"flex",justifyContent:"center",marginTop:"50px"}}><h1>No Customers Found</h1></div></div>
+            )}
+
+
+
+        {/* {customersList.length > 0 ? (
 
                   <div style={{ display: "grid", "grid-template-columns": "repeat( 2, minmax(250px, 1fr) )" }}>
                       {customersList.map((val) => {
@@ -134,7 +195,7 @@ const updateList = () => {
 
         ):(<div style={{display:"flex",justifyContent:"center",marginTop:"50px"}}><h1>No Customers Found</h1></div>)}
 
-        
+         */}
 
           </div>
 

@@ -2,9 +2,11 @@ import React,{useState,useEffect} from 'react'
 import Axios from 'axios'
 import MsgComp from './MsgComp'
 import {store} from '../App'
+import { useNavigate } from 'react-router-dom';
 
 function MessagesDashboard() {
-    
+
+    const navigate = useNavigate();
    const {msgList,setMsgList}=React.useContext(store)
 
     const [search,setSearch] = useState("");    
@@ -13,12 +15,16 @@ function MessagesDashboard() {
 
 useEffect(()=>{
     if(search===""){
-    Axios.get("http://localhost:3001/getmessagesforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+    Axios.get("http://localhost:3001/getmessagesforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
         if(res.data.auth){
         setMsgList(res.data.messages)
         console.log(res.data.messages)
         }
+        else{
+            navigate('/');
+        }
+
     }).then((res)=>{
         console.log(1)
     })
@@ -31,11 +37,15 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filtermessagesforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
+    Axios.get(`http://localhost:3001/filtermessagesforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
 
     if(response.data.auth){
         setMsgList(response.data.messages);
     }
+    else{
+        navigate('/');
+    }
+    
 })
 }
 

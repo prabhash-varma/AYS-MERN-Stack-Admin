@@ -15,40 +15,40 @@ function Dashboard() {
   const [templist,setTemplist] = useState([]);
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getemployeesforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+    Axios.get('http://localhost:3001/getemployeesforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.employees)
       setEmpCount(response.data.employees.length)
     }
     else{
-      navigate('/login')
+      navigate('/')
     }
     })
   },[])
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getusersforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+    Axios.get('http://localhost:3001/getusersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.users)
       setCustCount(response.data.users.length)
     }
     else{
-      navigate('/login')
+      navigate('/')
     }
     })
   },[])
 
   useEffect(()=>{
-    Axios.get('http://localhost:3001/getordersforadmin',{headers:{"x-access-token":localStorage.getItem("token")}}).then((response)=>{
+    Axios.get('http://localhost:3001/getordersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.orders)
       setOrderCount(response.data.orders.length)
     }
     else{
-      navigate('/login')
+      navigate('/')
     }
     })
   },[])

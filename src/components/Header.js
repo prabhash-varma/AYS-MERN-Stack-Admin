@@ -123,6 +123,7 @@ function Header() {
       </li>
       <li className="nav-item">
         <a onClick={()=>{
+          localStorage.removeItem("token");
           navigate("/")
         }} className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
        

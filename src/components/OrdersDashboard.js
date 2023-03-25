@@ -2,10 +2,11 @@ import React,{ useState,useContext, useEffect} from 'react'
 import OrdersComp from '../components/OrdersComp'
 import Axios from 'axios'
 import {store} from '../App'
-
+import { useNavigate } from 'react-router-dom'
 
 function OrdersDashboard() {
 
+    const navigate = useNavigate();
     const {ordersList,setOrdersList}=useContext(store)
 
     const [search,setSearch] = useState("");    
@@ -15,14 +16,14 @@ function OrdersDashboard() {
 useEffect(()=>{
 
     if(search===""){
-    Axios.get("http://localhost:3001/getordersforadmin",{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+    Axios.get("http://localhost:3001/getordersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
 
     if(res.data.auth){
         setOrdersList(res.data.orders)
         console.log(res.data)
     }
     else{
-        console.log("Error")
+        navigate('/');
     }
     }).then((res)=>{
         console.log(1)
@@ -36,13 +37,17 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`http://localhost:3001/filterordersforadmin/?filter=${filter}&search=${search}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((response) => {
+    Axios.get(`http://localhost:3001/filterordersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
         console.log("Orders Update list Function",response.data)
 
         if(response.data.auth===true){
          setOrdersList(response.data.orders);
         console.log("Orders Update list Function",response.data.orders);
         }
+        else{
+            navigate('/');
+        }
+        
 })
 }
 

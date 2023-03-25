@@ -1,11 +1,11 @@
 import React from 'react'
 import Axios from 'axios'
 import {store} from '../App'
-
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeComp(props) {
 
-
+  const navigate = useNavigate();
   const {employeesList,setEmployeesList}=React.useContext(store)
 
   const deleteEmployee = (id)=>{
@@ -17,11 +17,14 @@ function EmployeeComp(props) {
     })
     setEmployeesList([...employeesList  ])
 
-    Axios.delete(`http://localhost:3001/deleteemployee/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+    Axios.delete(`http://localhost:3001/deleteemployee/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
     if(res.data.auth){
         console.log(res.data)
         alert('Employee deleted successfully')
+    }
+    else{
+      navigate('/');
     }
     }
     )

@@ -2,10 +2,12 @@ import React,{useRef} from 'react'
 import Axios from 'axios'
 import {store} from '../App'
 import emailjs from '@emailjs/browser';
-
+import { useNavigate } from 'react-router-dom';
 
 
 function MsgComp(props) {
+
+    const navigate = useNavigate();
     const {msgList,setMsgList}=React.useContext(store) 
     const form = useRef();
     const sendMessage = (e) => {
@@ -30,11 +32,14 @@ function MsgComp(props) {
         })
         setMsgList([...msgList])
   
-        Axios.delete(`http://localhost:3001/deletemessage/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+        Axios.delete(`http://localhost:3001/deletemessage/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
            
         if(res.data.auth){
             console.log(res.data)
             alert('Message deleted successfully')
+        }
+        else{
+            navigate('/');
         }
         }
         )
@@ -49,7 +54,7 @@ function MsgComp(props) {
         <div style={{display:"flex",flexDirection:"column"}}>
   
         <div style={{display:"flex",justifyContent:"space-evenly"}}>
-          <h3 style={{marginTop:"10px"}} >Message Id: {props.id}</h3>.
+          <h5 style={{marginTop:"5px"}} >Message Id: {props.id}</h5>.
           <button type="button" style={{marginTop:"10px"}} class="btn btn-danger" onClick={()=>{
             deleteMsg(props.id);
           }}>Delete</button>

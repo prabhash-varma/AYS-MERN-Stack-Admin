@@ -1,10 +1,11 @@
 import React from 'react'
 import Axios from 'axios'
 import {store} from '../App'
-
+import { useNavigate } from 'react-router-dom';
 
 function OrdersComp(props) {
 
+  const navigate = useNavigate();
     const {ordersList,setOrdersList}=React.useContext(store)
 
   const deleteOrder = (id)=>{
@@ -16,11 +17,14 @@ function OrdersComp(props) {
     })
     setOrdersList([...ordersList])
 
-    Axios.delete(`http://localhost:3001/deleteorder/${id}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+    Axios.delete(`http://localhost:3001/deleteorder/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
     if(res.data.auth){
         console.log(res.data)
         alert('Orders deleted successfully')
+    }
+    else{
+      navigate('/');
     }
     }
     )
