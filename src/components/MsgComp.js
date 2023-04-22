@@ -13,7 +13,7 @@ function MsgComp(props) {
     const sendMessage = (e) => {
         e.preventDefault();
         console.log(form.current)
-        emailjs.sendForm('service_teo418n', 'template_854brnf', form.current, 'lERXfXjcjF38QjHJ3')
+        emailjs.sendForm(process.env.REACT_APP_ADMIN_EMAILJS_SERVICE, process.env.REACT_APP_ADMIN_EMAILJS_TEMPLATE, form.current, process.env.REACT_APP_ADMIN_EMAILJS_USERID)
           .then((result) => {
               console.log(result.text);
               alert("Email Sent Successfully")
@@ -32,7 +32,7 @@ function MsgComp(props) {
         })
         setMsgList([...msgList])
   
-        Axios.delete(`http://localhost:3001/deletemessage/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+        Axios.delete(`https://ays-mern-backend.vercel.app/deletemessage/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
            
         if(res.data.auth){
             console.log(res.data)
