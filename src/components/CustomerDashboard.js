@@ -145,10 +145,11 @@ const updateList = () => {
                                 <td>{val.state}</td>
                                 <td>{val.pincode}</td>
                                 <td><button style={{color:'red'}} onClick={()=>{
-                                    Axios.delete(`http://localhost:3001/deleteuser/${val._id.valueOf()}`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{
+                                    Axios.delete(`http://localhost:3001/deleteuser/${val._id.valueOf()}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
                                         console.log(res.data)
                                         if(res.data.auth){
                                             updateList();
+                                            alert("Customer Deleted")
                                         }
                                     })
                                 }

@@ -4,6 +4,8 @@ import {useEffect} from 'react'
 import {useState} from 'react'
 import Axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import Barchart from './Barchart'
+import Piechart from './Piechart'
 
 function Dashboard() {
 
@@ -12,6 +14,41 @@ function Dashboard() {
   const [CustCount,setCustCount] = useState(0);
   const [OrderCount,setOrderCount] = useState(0);
 
+  const [salonCount,setSalonCount] = useState(0);
+  const [packersCount,setPackersCount] = useState(0);
+  const [homeCount,setHomeCount] = useState(0);
+  const [paintingCount,setPaintingCount] = useState(0);
+  const [pestCount,setPestCount] = useState(0);
+  const [applianceCount,setApplianceCount] = useState(0);
+
+
+  const [bardata,setBardata] = useState({
+    labels: ['Orders','Customers','Employees','Visitors'],
+    datasets:[
+      {
+        label:'Statistics',
+        backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9'],
+        data:[OrderCount,CustCount,EmpCount,65]
+      }
+    ]
+
+});
+
+
+const [pieData,setPieData] = useState({
+  labels: ['Salon','Packers and Movers','Home Cleaning','Painting','Pest Control','Appliances'],
+  datasets:[
+    {
+      label:'Statistics',
+      backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9','#964B00','#FFD700'],
+      data:[salonCount,packersCount,homeCount,paintingCount,pestCount,applianceCount]
+    }
+  ]
+})
+
+
+
+
   const [templist,setTemplist] = useState([]);
 
   useEffect(()=>{
@@ -19,11 +56,25 @@ function Dashboard() {
 
     if(response.data.auth){
       setTemplist(response.data.employees)
+      
       setEmpCount(response.data.employees.length)
+      
     }
     else{
       navigate('/')
     }
+    })
+    .then(()=>{
+      setBardata({
+        labels: ['Orders','Customers','Employees','Visitors'],
+        datasets:[
+          {
+            label:'Statistics',
+            backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9'],
+            data:[OrderCount,CustCount,EmpCount,65]
+          }
+        ]
+      })
     })
   },[])
 
@@ -33,10 +84,22 @@ function Dashboard() {
     if(response.data.auth){
       setTemplist(response.data.users)
       setCustCount(response.data.users.length)
+      
     }
     else{
       navigate('/')
     }
+    }).then(()=>{
+      setBardata({
+        labels: ['Orders','Customers','Employees','Visitors'],
+        datasets:[
+          {
+            label:'Statistics',
+            backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9'],
+            data:[OrderCount,CustCount,EmpCount,65]
+          }
+        ]
+      })
     })
   },[])
 
@@ -46,12 +109,109 @@ function Dashboard() {
     if(response.data.auth){
       setTemplist(response.data.orders)
       setOrderCount(response.data.orders.length)
+      
     }
     else{
       navigate('/')
     }
+    }).then(()=>{
+      setBardata({
+        labels: ['Orders','Customers','Employees','Visitors'],
+        datasets:[
+          {
+            label:'Statistics',
+            backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9'],
+            data:[OrderCount,CustCount,EmpCount,65]
+          }
+        ]
+      })
+    }).then(()=>{
+       
+
+    }).then(()=>{
+      
     })
   },[])
+
+
+
+useEffect(()=>{
+
+ 
+  Axios.get(`http://localhost:3001/getcountforadmin?type=salon`).then((response)=>{
+    setSalonCount(response.data.count)
+  })
+
+  Axios.get(`http://localhost:3001/getcountforadmin?type=packers and movers`).then((response)=>{
+    setPackersCount(response.data.count)
+  })
+
+  Axios.get(`http://localhost:3001/getcountforadmin?type=home cleaning`).then((response)=>{
+    setHomeCount(response.data.count)
+  })
+
+  Axios.get(`http://localhost:3001/getcountforadmin?type=painting`).then((response)=>{
+    setPaintingCount(response.data.count)
+  })
+
+  Axios.get(`http://localhost:3001/getcountforadmin?type=pest control`).then((response)=>{
+    setPestCount(response.data.count)
+  })
+
+  Axios.get(`http://localhost:3001/getcountforadmin?type=appliances`).then((response)=>{
+    setApplianceCount(response.data.count)
+  })
+
+
+
+  setPieData({
+    labels: ['Salon','Packers and Movers','Home Cleaning','Painting','Pest Control','Appliances'],
+    datasets:[
+      {
+        label:'Statistics',
+        backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9','#964B00','#FFD700'],
+        data:[salonCount,packersCount,homeCount,paintingCount,pestCount,applianceCount]
+      }
+    ]
+  })
+
+
+},[templist])
+
+
+
+  useEffect(()=>{
+
+    setBardata({
+      labels: ['Orders','Customers','Employees','Visitors'],
+      datasets:[
+        {
+          label:'Statistics',
+          backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#964B00'],
+          data:[OrderCount,CustCount,EmpCount,65]
+        }
+      ]
+    })
+
+
+
+  
+    setPieData({
+      labels: ['Salon','Packers and Movers','Home Cleaning','Painting','Pest Control','Appliances'],
+      datasets:[
+        {
+          label:'Statistics',
+          backgroundColor:['#3e95cd','#8e5ea2','#3cba9f','#e8c3b9','#964B00','#FFD700'],
+          data:[salonCount,packersCount,homeCount,paintingCount,pestCount,applianceCount]
+        }
+      ]
+    })
+
+  },[OrderCount,CustCount,EmpCount,bardata,salonCount,packersCount,homeCount,paintingCount,pestCount,applianceCount,pieData])
+
+
+  
+
 
 
 
@@ -129,8 +289,50 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="row">
-          <section className="col-lg-7 connectedSortable">
+
+          
+          
+
+        <div style={{marginTop:'70px'}} className="row">
+
+          <section>
+            {/* Bar Chart */}
+            <div  className="card card-primary">
+              <div className="card-header">
+                <h3 className="card-title">Statistics</h3>
+                <div className="card-tools">
+                  <button type="button" className="btn btn-tool" data-card-widget="collapse">
+                    <i className="fas fa-minus" />
+                  </button>
+                  <button type="button" className="btn btn-tool" data-card-widget="remove">
+                    <i className="fas fa-times" />
+                  </button>
+                </div>
+              </div>
+              <div style={{width:"700px"}} className="card-body">
+                <div className="chart">
+                  <canvas id="barChart" style={{ height: 10, width:"300px"}} />
+                  <Barchart chartData={bardata} />
+                </div>
+              </div>
+
+              <div style={{width:"700px"}} className="card-body">
+                <div className="chart">
+                  <canvas id="barChart" style={{ height: 10, width:"300px"}} />
+                  <Barchart chartData={pieData} />
+                </div>
+              </div>
+
+
+
+             
+            </div>
+         
+    
+          </section>
+
+
+          {/* <section className="col-lg-7 connectedSortable">
             <div className="card">
               <div className="card-header">
                 <h3 className="card-title">
@@ -426,8 +628,14 @@ function Dashboard() {
                 <button type="button" className="btn btn-primary float-right"><i className="fas fa-plus" /> Add item</button>
               </div>
             </div>
-          </section>
-          <section className="col-lg-5 connectedSortable">
+          </section> */}
+
+
+
+
+
+
+          {/* <section className="col-lg-5 connectedSortable">
             <div className="card bg-gradient-primary">
               <div className="card-header border-0">
                 <h3 className="card-title">
@@ -529,6 +737,12 @@ function Dashboard() {
               </div>
             </div>
           </section>
+
+ */}
+
+
+
+
         </div>
       </div>
     </section>
