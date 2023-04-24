@@ -23,7 +23,7 @@ function Login() {
       alert('Please enter password')
     }else{
 
-        Axios.get(`https://ays-mern-backend.vercel.app/adminlogin?adminemail=${adminemail}&adminpassword=${adminpassword}`).then((res)=>{
+        Axios.get(`https://ays-backend.azurewebsites.net/adminlogin?adminemail=${adminemail}&adminpassword=${adminpassword}`).then((res)=>{
           if(res.data.auth === true)
             {
               alert('Login success')

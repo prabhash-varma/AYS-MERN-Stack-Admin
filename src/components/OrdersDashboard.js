@@ -16,7 +16,7 @@ function OrdersDashboard() {
 useEffect(()=>{
 
     if(search===""){
-    Axios.get("https://ays-mern-backend.vercel.app/getordersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.get("https://ays-backend.azurewebsites.net/getordersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
 
     if(res.data.auth){
         setOrdersList(res.data.orders)
@@ -37,7 +37,7 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`https://ays-mern-backend.vercel.app/filterordersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
+    Axios.get(`https://ays-backend.azurewebsites.net/filterordersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
         console.log("Orders Update list Function",response.data)
 
         if(response.data.auth===true){

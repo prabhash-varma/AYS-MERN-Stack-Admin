@@ -52,7 +52,7 @@ const [pieData,setPieData] = useState({
   const [templist,setTemplist] = useState([]);
 
   useEffect(()=>{
-    Axios.get('https://ays-mern-backend.vercel.app/getemployeesforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
+    Axios.get('https://ays-backend.azurewebsites.net/getemployeesforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.employees)
@@ -79,7 +79,7 @@ const [pieData,setPieData] = useState({
   },[])
 
   useEffect(()=>{
-    Axios.get('https://ays-mern-backend.vercel.app/getusersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
+    Axios.get('https://ays-backend.azurewebsites.net/getusersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.users)
@@ -104,7 +104,7 @@ const [pieData,setPieData] = useState({
   },[])
 
   useEffect(()=>{
-    Axios.get('https://ays-mern-backend.vercel.app/getordersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
+    Axios.get('https://ays-backend.azurewebsites.net/getordersforadmin',{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response)=>{
 
     if(response.data.auth){
       setTemplist(response.data.orders)
@@ -138,27 +138,27 @@ const [pieData,setPieData] = useState({
 useEffect(()=>{
 
  
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=salon`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=salon`).then((response)=>{
     setSalonCount(response.data.count)
   })
 
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=packers and movers`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=packers and movers`).then((response)=>{
     setPackersCount(response.data.count)
   })
 
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=home cleaning`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=home cleaning`).then((response)=>{
     setHomeCount(response.data.count)
   })
 
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=painting`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=painting`).then((response)=>{
     setPaintingCount(response.data.count)
   })
 
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=pest control`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=pest control`).then((response)=>{
     setPestCount(response.data.count)
   })
 
-  Axios.get(`https://ays-mern-backend.vercel.app/getcountforadmin?type=appliances`).then((response)=>{
+  Axios.get(`https://ays-backend.azurewebsites.net/getcountforadmin?type=appliances`).then((response)=>{
     setApplianceCount(response.data.count)
   })
 
