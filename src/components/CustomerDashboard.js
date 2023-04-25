@@ -18,7 +18,7 @@ function CustomerDashboard() {
 useEffect(()=>{
 
     if(search==""){
-    Axios.get("http://localhost:3001/getusersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.get("https://ays-backend.azurewebsites.net/getusersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
         if(res.data.auth){
         setCustomersList(res.data.users)
