@@ -13,7 +13,7 @@ function MsgComp(props) {
     const sendMessage = (e) => {
         e.preventDefault();
         console.log(form.current)
-        emailjs.sendForm(process.env.REACT_APP_ADMIN_EMAILJS_SERVICE, process.env.REACT_APP_ADMIN_EMAILJS_TEMPLATE, form.current, process.env.REACT_APP_ADMIN_EMAILJS_USERID)
+        emailjs.sendForm("service_teo418n", "template_854brnf", form.current, "lERXfXjcjF38QjHJ3")
           .then((result) => {
               console.log(result.text);
               alert("Email Sent Successfully")
