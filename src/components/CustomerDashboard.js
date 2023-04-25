@@ -22,7 +22,7 @@ useEffect(()=>{
         
         if(res.data.auth){
         setCustomersList(res.data.users)
-        console.log(res.data.users)
+        console.log(res.data)
         }
         else{
             navigate('/');
