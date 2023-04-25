@@ -20,7 +20,7 @@ useEffect(()=>{
 
     if(res.data.auth){
         setOrdersList(res.data.orders)
-        console.log(res.data)
+        //console.log(res.data)
     }
     else{
         navigate('/');

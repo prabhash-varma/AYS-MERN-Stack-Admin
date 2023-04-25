@@ -21,7 +21,7 @@ function EmployeeDashboard() {
 
                 if (res.data.auth) {
                     setEmployeesList(res.data.employees)
-                    console.log(res.data.employees)
+                    //console.log(res.data.employees)
                 }
                 else {
                     navigate('/');
