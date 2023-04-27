@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function Barchart({chartData}) {
-    console.log(chartData)
+    // console.log(chartData)
   return <Bar data={chartData} />
 }
 
