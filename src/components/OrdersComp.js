@@ -17,7 +17,7 @@ function OrdersComp(props) {
     })
     setOrdersList([...ordersList])
 
-    Axios.delete(`https://ays-backend.azurewebsites.net/deleteorder/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.delete(`https://ays-mern-backend.vercel.app/deleteorder/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
     if(res.data.auth){
         console.log(res.data)

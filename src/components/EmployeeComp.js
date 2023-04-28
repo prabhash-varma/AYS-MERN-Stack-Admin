@@ -17,7 +17,7 @@ function EmployeeComp(props) {
     })
     setEmployeesList([...employeesList  ])
 
-    Axios.delete(`https://ays-backend.azurewebsites.net/deleteemployee/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.delete(`https://ays-mern-backend.vercel.app/deleteemployee/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
     if(res.data.auth){
         console.log(res.data)

@@ -15,7 +15,7 @@ function MessagesDashboard() {
 
 useEffect(()=>{
     if(search===""){
-    Axios.get("https://ays-backend.azurewebsites.net/getmessagesforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.get("https://ays-mern-backend.vercel.app/getmessagesforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
         if(res.data.auth){
         setMsgList(res.data.messages)
@@ -37,7 +37,7 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`https://ays-backend.azurewebsites.net/filtermessagesforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
+    Axios.get(`https://ays-mern-backend.vercel.app/filtermessagesforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
 
     if(response.data.auth){
         setMsgList(response.data.messages);

@@ -18,7 +18,7 @@ function CustomerDashboard() {
 useEffect(()=>{
 
     if(search==""){
-    Axios.get("https://ays-backend.azurewebsites.net/getusersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+    Axios.get("https://ays-mern-backend.vercel.app/getusersforadmin",{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
         
         if(res.data.auth){
         setCustomersList(res.data.users)
@@ -37,7 +37,7 @@ useEffect(()=>{
 
 
 const updateList = () => {
-    Axios.get(`https://ays-backend.azurewebsites.net/filtercustomersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
+    Axios.get(`https://ays-mern-backend.vercel.app/filtercustomersforadmin/?filter=${filter}&search=${search}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((response) => {
         console.log("Update list Function",response.data)
 
         if(response.data.auth){
@@ -145,7 +145,7 @@ const updateList = () => {
                                 <td>{val.state}</td>
                                 <td>{val.pincode}</td>
                                 <td><button style={{color:'red'}} onClick={()=>{
-                                    Axios.delete(`https://ays-backend.azurewebsites.net/deleteuser/${val._id.valueOf()}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+                                    Axios.delete(`https://ays-mern-backend.vercel.app/deleteuser/${val._id.valueOf()}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
                                         console.log(res.data)
                                         if(res.data.auth){
                                             updateList();
