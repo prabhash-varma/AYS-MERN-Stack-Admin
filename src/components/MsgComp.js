@@ -32,7 +32,7 @@ function MsgComp(props) {
         })
         setMsgList([...msgList])
   
-        Axios.delete(`https://ays-mern-backend.vercel.app/deletemessage/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+        Axios.delete(`https://ays-mern-backend.onrender.com/deletemessage/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
            
         if(res.data.auth){
             console.log(res.data)

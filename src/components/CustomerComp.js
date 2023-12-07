@@ -19,7 +19,7 @@ function CustomerComp(props) {
       })
       setCustomersList([...customersList])
 
-      Axios.delete(`https://ays-mern-backend.vercel.app/deleteuser/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
+      Axios.delete(`https://ays-mern-backend.onrender.com/deleteuser/${id}`,{headers:{"authorization":`bearer ${localStorage.getItem("token")}`}}).then((res)=>{
 
       if(res.data.auth){
           console.log(res.data)
